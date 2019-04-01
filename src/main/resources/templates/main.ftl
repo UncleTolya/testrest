@@ -10,5 +10,12 @@
             <label>input the date<input type="text" name="date" placeholder="required date"></label>
             <button type="submit">get info on the page</button>
         </form>
+    <#list params as param>
+        <#if param??>
+            <div>${param}</div>
+        </#if>
+    <#else>
+        No params
+    </#list>
     </body>
 </html>

@@ -16,10 +16,10 @@ public class Visit {
     private String url;
     private Date date;
 
-    public Visit(final User user, final String url) {
+    public Visit(final User user, final String url, final Date date) {
         this.user = user;
         this.url = url;
-        this.date = new Date();
+        this.date = date;
     }
 
     public Visit() {

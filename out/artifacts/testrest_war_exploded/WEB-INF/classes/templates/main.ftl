@@ -5,13 +5,17 @@
         <title>Test Rest by tolymhlv</title>
     </head>
     <body>
-        <p>This is my web page</p>
-        <form>
-            <label><input type="text" name="date" value="${date!""}">Date</label>
-            <button type="submit"></button>
+        <p>use that simply form to get information about</p>
+        <form method="post">
+            <label>input the date<input type="text" name="date" placeholder="required date"></label>
+            <button type="submit">get info on the page</button>
         </form>
-        <#list parameters?keys as key>
-            ${key} = ${parameters[key]}
-        </#list>
+    <#list params as param>
+        <#if param??>
+            <div>${param}</div>
+        </#if>
+    <#else>
+        No params
+    </#list>
     </body>
 </html>
