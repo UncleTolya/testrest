@@ -5,5 +5,5 @@ import ru.tolymhlv.testrest.domain.User;
 import java.util.List;
 
 public interface UserRepo extends CrudRepository<User, Long> {
-    List<User> findByIpAndUserAgent();
+    List<User> findByIpAndUserAgent(String ip, String userAgent);
 }
