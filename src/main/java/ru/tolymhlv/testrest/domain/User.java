@@ -10,9 +10,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ElementCollection(targetClass = Visit.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_visits", joinColumns = @JoinColumn(name = "user_id"))
-    private Set<Visit> visits;
+//    @ElementCollection(targetClass = Visit.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "user_visits", joinColumns = @JoinColumn(name = "user_id"))
+//    private Set<Visit> visits;
 
     private String ip;
     private String userAgent;
@@ -33,13 +33,13 @@ public class User {
         this.id = id;
     }
 
-    public Set<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(Set<Visit> visits) {
-        this.visits = visits;
-    }
+//    public Set<Visit> getVisits() {
+//        return visits;
+//    }
+//
+//    public void setVisits(Set<Visit> visits) {
+//        this.visits = visits;
+//    }
 
     public String getIp() {
         return ip;
