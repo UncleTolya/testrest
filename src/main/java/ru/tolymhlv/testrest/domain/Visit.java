@@ -1,12 +1,6 @@
 package ru.tolymhlv.testrest.domain;
 
-import org.apache.catalina.User;
-import org.hibernate.annotations.Generated;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -15,6 +9,9 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
     private String url;
     private Date date;

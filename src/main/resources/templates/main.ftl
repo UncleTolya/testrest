@@ -1,14 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
     <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>Title Goes Here</title>
+        <title>Test Rest by tolymhlv</title>
     </head>
     <body>
-        <p>This is my web page</p>
-        <form>
-            <input type="text">
-            <button type="submit"></button>
+        <p>use that simply form to get information about</p>
+        <form method="post">
+            <label>input the date<input type="text" name="date" placeholder="required date"></label>
+            <button type="submit">get info on the page</button>
         </form>
-
+    </body>
 </html>
