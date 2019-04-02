@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.tolymhlv.testrest.domains.Visit;
 import ru.tolymhlv.testrest.repos.VisitRepo;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class VisitService {
     }
 
     public List<Visit> getVisitsBetweenDates(final LocalDateTime from, final LocalDateTime to) {
-        return visitRepo.findByDateBetween(from, to);
+//        return visitRepo.findByDateBetween(Date.valueOf(from.toLocalDate()), Date.valueOf(to.toLocalDate()));
+        return visitRepo.findAllByDateBetween(from, to);
     }
 
     public List<Visit> getVisitsFromStartDay() {

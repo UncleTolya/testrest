@@ -28,7 +28,7 @@ public class DateAndTimeUtils {
     }
 
     public LocalDateTime stringToTime(final String string) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         return LocalDateTime.parse(string, formatter);
     }
 }

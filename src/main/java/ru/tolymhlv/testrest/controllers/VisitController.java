@@ -46,9 +46,9 @@ public class VisitController {
         return "addVisitAndReturnStatisticJson";
     }
 
-    @GetMapping(name = "/visits/{from}-{to}", produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/visits/{from}/{to}", method = RequestMethod.GET)
     public String getStatisticByDate(
-            final @PathVariable String from,
+            final @PathVariable(name = "from") String from,
             final @PathVariable String to,
             final Model model) {
 
