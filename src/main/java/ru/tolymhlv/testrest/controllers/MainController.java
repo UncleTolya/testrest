@@ -28,7 +28,7 @@ public class MainController {
         this.timeUtils = timeUtils;
     }
 
-    @PostMapping("/visit")
+    @PostMapping(name = "/visit", produces = "application/json; charset=UTF-8")
     public String makeVisitEventAndGetCommonStatistic(
             final @RequestParam String userId,
             final @RequestParam String pageId,
@@ -40,14 +40,14 @@ public class MainController {
         final Integer counterVisitsToday = visitsToday.size();
         final Long counterUniqUsersToday = visitsToday
                 .stream()
-                .map(Visit::getUserId)
-                .distinct()
-                .count();
+                .map(Visit::getUserId) // got the List<UserId>
+                .distinct() // delete duplicate UserId from the list
+                .count(); // only uniq UserId
 
         return "main";
     }
 
-    @GetMapping("/visits/{from}-{to}")
+    @GetMapping(name = "/visits/{from}-{to}", produces = "application/json; charset=UTF-8")
     public String getStatisticByDate(
             final @PathVariable String from,
             final @PathVariable String to,
@@ -65,11 +65,11 @@ public class MainController {
                 .count();
         final Long counterUniqRegularUsersByDate = visitsByDate
                 .parallelStream()
-                .collect(Collectors.groupingByConcurrent(Visit::getUserId))
+                .collect(Collectors.groupingByConcurrent(Visit::getUserId)) // got ConcurrentMap<UserId, List<Visit>>
                 .entrySet()
                 .parallelStream()
-                .map(Map.Entry::getValue)
-                .filter(visits -> visits.size() >= 10)
+                .map(Map.Entry::getValue) //got List<List<Visit>>, each one belong to uniq user
+                .filter(visits -> visits.size() >= 10) // filter visits by quantity condition from the task
                 .count();
 
         return "main";
