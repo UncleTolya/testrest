@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Service
-public class TimeUtils {
+public class DateAndTimeUtils {
 
     @Value("${zoneId}")
     private String zoneId;

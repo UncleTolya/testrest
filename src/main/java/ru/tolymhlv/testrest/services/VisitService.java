@@ -12,16 +12,16 @@ import java.util.List;
 public class VisitService {
 
     private final VisitRepo visitRepo;
-    private final TimeUtils timeUtils;
+    private final DateAndTimeUtils dateAndTimeUtils;
 
     @Autowired
-    public VisitService(final VisitRepo visitRepo, final TimeUtils timeUtils) {
+    public VisitService(final VisitRepo visitRepo, final DateAndTimeUtils dateAndTimeUtils) {
         this.visitRepo = visitRepo;
-        this.timeUtils = timeUtils;
+        this.dateAndTimeUtils = dateAndTimeUtils;
     }
 
     public Visit addVisit(final String userId, final String pageId) {
-        final Visit visit = new Visit(userId, pageId, timeUtils.now());
+        final Visit visit = new Visit(userId, pageId, dateAndTimeUtils.now());
         return visitRepo.save(visit);
     }
 
@@ -30,8 +30,8 @@ public class VisitService {
     }
 
     public List<Visit> getVisitsFromStartDay() {
-        final LocalDateTime now = timeUtils.now();
-        final LocalDateTime startOfDay = timeUtils.startOfDate(now);
+        final LocalDateTime now = dateAndTimeUtils.now();
+        final LocalDateTime startOfDay = dateAndTimeUtils.startOfDate(now);
         return getVisitsBetweenDates(startOfDay, now);
     }
 }

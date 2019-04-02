@@ -1,0 +1,4 @@
+{
+"counterVisitsToday": ${counterVisitsToday},
+"counterUniqUsersToday": ${counterUniqUsersToday}
+}
