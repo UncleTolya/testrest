@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class DateAndTimeUtils {
@@ -27,6 +28,7 @@ public class DateAndTimeUtils {
     }
 
     public LocalDateTime stringToTime(final String string) {
-        return null;
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(string, formatter);
     }
 }

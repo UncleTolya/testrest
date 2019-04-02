@@ -14,18 +14,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
-public class MainController {
+public class VisitController {
 
     private final VisitService visitService;
     private final DateAndTimeUtils dateAndTimeUtils;
 
     @Autowired
-    public MainController(VisitService visitService, DateAndTimeUtils dateAndTimeUtils) {
+    public VisitController(VisitService visitService, DateAndTimeUtils dateAndTimeUtils) {
         this.visitService = visitService;
         this.dateAndTimeUtils = dateAndTimeUtils;
     }
 
-    @PostMapping(name = "/visit", produces = "application/json; charset=UTF-8")
+    @PostMapping(name = "/visit")
     public String makeVisitEventAndGetCommonStatistic(
             final @RequestParam String userId,
             final @RequestParam String pageId,
@@ -70,6 +70,7 @@ public class MainController {
                 .map(Map.Entry::getValue) //got List<List<Visit>>, each one belong to uniq user
                 .filter(visits -> visits.size() >= 10) // filter visits by quantity condition from the task
                 .count();
+
         model.addAttribute("counterVisitsByDate", counterVisitsByDate);
         model.addAttribute("counterUniqUsersByDate", counterUniqUsersByDate);
         model.addAttribute("counterUniqRegularUsersByDate", counterUniqRegularUsersByDate);
