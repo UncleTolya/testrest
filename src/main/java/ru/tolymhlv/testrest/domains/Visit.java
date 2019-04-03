@@ -1,9 +1,18 @@
 package ru.tolymhlv.testrest.domains;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Immutable;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Immutable
+@Data
+@NoArgsConstructor
 public class Visit {
 
     @Id
@@ -22,38 +31,4 @@ public class Visit {
         this.date = date;
     }
 
-    public Visit() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getPageId() {
-        return pageId;
-    }
-
-    public void setPageId(String pageId) {
-        this.pageId = pageId;
-    }
 }
