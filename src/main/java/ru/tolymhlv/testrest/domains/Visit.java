@@ -32,5 +32,4 @@ public class Visit {
         this.pageId = pageId;
         this.date = date;
     }
-
 }

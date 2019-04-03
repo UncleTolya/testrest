@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,7 +60,7 @@ public class VisitServiceImpl implements VisitService {
                 .entrySet()
                 .parallelStream()
                 .map(Map.Entry::getValue)
-                .distinct()
+                .map(visits -> visits.stream().map(Visit::getPageId).distinct().collect(Collectors.toList()))
                 .filter(visits -> visits.size() >= quantityOfVisitedPagesToBeingRegularUser)
                 .count();
 
