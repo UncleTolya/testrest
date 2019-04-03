@@ -1,4 +1,0 @@
-{
-"counterVisitsToday": ${counterVisitsToday},
-"counterUniqUsersToday": ${counterUniqUsersToday}
-}
