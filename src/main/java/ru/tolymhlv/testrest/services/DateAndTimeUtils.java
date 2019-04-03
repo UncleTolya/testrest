@@ -1,5 +1,6 @@
 package ru.tolymhlv.testrest.services;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class DateAndTimeUtils {
         return LocalDateTime.ofInstant(instant, getZoneId());
     }
 
-    public LocalDateTime startOfDate(final LocalDateTime now) {
+    public LocalDateTime startOfDay(@NonNull final LocalDateTime now) {
         return now.toLocalDate().atStartOfDay(getZoneId()).toLocalDateTime();
     }
 
@@ -30,8 +31,8 @@ public class DateAndTimeUtils {
         return ZoneId.of(stringZoneId);
     }
 
-    public LocalDateTime stringToTime(final String string) {
+    public LocalDateTime stringToTime(@NonNull final String stringWithDate) {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
-        return LocalDateTime.parse(string, formatter);
+        return LocalDateTime.parse(stringWithDate, formatter);
     }
 }

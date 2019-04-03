@@ -1,9 +1,8 @@
 package ru.tolymhlv.testrest.domains;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.NonNull;
 import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
@@ -25,7 +24,10 @@ public class Visit {
     @Column(name = "date")
     private LocalDateTime date;
 
-    public Visit(final String userId, final String pageId, final LocalDateTime date) {
+    public Visit(@NonNull final String userId,
+                 @NonNull final String pageId,
+                 @NonNull final LocalDateTime date) {
+
         this.userId = userId;
         this.pageId = pageId;
         this.date = date;

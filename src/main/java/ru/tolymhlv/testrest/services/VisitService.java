@@ -1,11 +1,11 @@
 package ru.tolymhlv.testrest.services;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tolymhlv.testrest.domains.Visit;
 import ru.tolymhlv.testrest.repos.VisitRepo;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,24 +16,23 @@ public class VisitService {
     private final DateAndTimeUtils dateAndTimeUtils;
 
     @Autowired
-    public VisitService(final VisitRepo visitRepo, final DateAndTimeUtils dateAndTimeUtils) {
+    public VisitService(@NonNull final VisitRepo visitRepo,@NonNull final DateAndTimeUtils dateAndTimeUtils) {
         this.visitRepo = visitRepo;
         this.dateAndTimeUtils = dateAndTimeUtils;
     }
 
-    public Visit addVisit(final String userId, final String pageId) {
+    public Visit addVisit(@NonNull final String userId,@NonNull  final String pageId) {
         final Visit visit = new Visit(userId, pageId, dateAndTimeUtils.now());
         return visitRepo.save(visit);
     }
 
-    public List<Visit> getVisitsBetweenDates(final LocalDateTime from, final LocalDateTime to) {
-//        return visitRepo.findByDateBetween(Date.valueOf(from.toLocalDate()), Date.valueOf(to.toLocalDate()));
+    public List<Visit> getVisitsBetweenDates(@NonNull final LocalDateTime from,@NonNull  final LocalDateTime to) {
         return visitRepo.findAllByDateBetween(from, to);
     }
 
     public List<Visit> getVisitsFromStartDay() {
         final LocalDateTime now = dateAndTimeUtils.now();
-        final LocalDateTime startOfDay = dateAndTimeUtils.startOfDate(now);
+        final LocalDateTime startOfDay = dateAndTimeUtils.startOfDay(now);
         return getVisitsBetweenDates(startOfDay, now);
     }
 }

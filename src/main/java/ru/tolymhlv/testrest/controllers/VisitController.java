@@ -1,13 +1,17 @@
 package ru.tolymhlv.testrest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.tolymhlv.testrest.domains.Visit;
 import ru.tolymhlv.testrest.services.VisitService;
 import ru.tolymhlv.testrest.services.DateAndTimeUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +22,10 @@ public class VisitController {
 
     private final VisitService visitService;
     private final DateAndTimeUtils dateAndTimeUtils;
+
+    @Value("${quantityOfVisitedPagesToBeingRegularUser")
+    @Pattern(regexp = "[0-9]+")
+    private int quantityOfVisitedPagesToBeingRegularUser;
 
     @Autowired
     public VisitController(VisitService visitService, DateAndTimeUtils dateAndTimeUtils) {
@@ -37,9 +45,9 @@ public class VisitController {
         final int counterVisitsToday = visitsToday.size();
         final long counterUniqUsersToday = visitsToday
                 .stream()
-                .map(Visit::getUserId) // got the List<UserId>
-                .distinct() // delete duplicate UserId from the list
-                .count(); // only uniq UserId
+                .map(Visit::getUserId)
+                .distinct()
+                .count();
         model.addAttribute("counterVisitsToday", counterVisitsToday);
         model.addAttribute("counterUniqUsersToday", counterUniqUsersToday);
 
@@ -68,7 +76,8 @@ public class VisitController {
                 .entrySet()
                 .parallelStream()
                 .map(Map.Entry::getValue)
-                .filter(visits -> visits.size() >= 10)
+                .distinct()
+                .filter(visits -> visits.size() >= quantityOfVisitedPagesToBeingRegularUser)
                 .count();
 
         model.addAttribute("counterVisitsByDate", counterVisitsByDate);

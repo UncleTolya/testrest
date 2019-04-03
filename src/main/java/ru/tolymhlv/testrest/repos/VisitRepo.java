@@ -1,5 +1,6 @@
 package ru.tolymhlv.testrest.repos;
 
+import lombok.NonNull;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface VisitRepo extends CrudRepository<Visit, Long> {
 
-    List<Visit> findAllByDateBetween(LocalDateTime fromDate, LocalDateTime toDate);
+    List<Visit> findAllByDateBetween(@NonNull LocalDateTime fromDate,@NonNull LocalDateTime toDate);
 
 
 
