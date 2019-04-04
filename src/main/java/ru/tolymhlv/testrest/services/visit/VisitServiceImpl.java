@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 import ru.tolymhlv.testrest.domains.Visit;
 import ru.tolymhlv.testrest.repos.VisitRepo;
 import ru.tolymhlv.testrest.services.DateAndTimeUtils;
+import ru.tolymhlv.testrest.services.visit.requests.GetStatisticsRequest;
+import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
+import ru.tolymhlv.testrest.services.visit.responses.FullVisitStatistics;
+import ru.tolymhlv.testrest.services.visit.responses.VisitStatistics;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service

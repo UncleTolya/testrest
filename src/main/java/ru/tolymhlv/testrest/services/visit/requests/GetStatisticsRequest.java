@@ -1,4 +1,4 @@
-package ru.tolymhlv.testrest.services.visit;
+package ru.tolymhlv.testrest.services.visit.requests;
 
 import lombok.Data;
 import java.time.LocalDateTime;
