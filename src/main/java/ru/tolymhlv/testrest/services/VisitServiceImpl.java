@@ -1,4 +1,4 @@
-package ru.tolymhlv.testrest.services.visit;
+package ru.tolymhlv.testrest.services;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.tolymhlv.testrest.domains.Visit;
 import ru.tolymhlv.testrest.repos.JpaVisitRepo;
-import ru.tolymhlv.testrest.services.DateAndTimeUtils;
-import ru.tolymhlv.testrest.services.visit.requests.GetStatisticsRequest;
-import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
-import ru.tolymhlv.testrest.services.visit.responses.FullVisitStatistics;
-import ru.tolymhlv.testrest.services.visit.responses.VisitStatistics;
+import ru.tolymhlv.testrest.services.requests.GetStatisticsRequest;
+import ru.tolymhlv.testrest.services.requests.VisitCreateRequest;
+import ru.tolymhlv.testrest.services.responses.FullVisitStatistics;
+import ru.tolymhlv.testrest.services.responses.VisitStatistics;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -37,7 +36,11 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public VisitStatistics create(@NonNull final VisitCreateRequest request) {
         addVisit(request.getUserId(), request.getPageId());
-        final List<Visit> visitsToday = getVisitsFromStartDay();
+
+        final LocalDateTime now = dateAndTimeUtils.now();
+        final LocalDateTime startOfDay = dateAndTimeUtils.startOfDay(now);
+
+        final List<Visit> visitsToday = getVisitsBetweenDates(startOfDay, now);
         final int counterVisitsToday = visitsToday.size();
         final long counterUniqUsersToday = visitsToday
                 .stream()
@@ -78,12 +81,5 @@ public class VisitServiceImpl implements VisitService {
     private List<Visit> getVisitsBetweenDates(@NonNull final LocalDateTime from, @NonNull final LocalDateTime to) {
         return visitRepo.findAllByDateBetween(from, to);
     }
-
-    private List<Visit> getVisitsFromStartDay() {
-        final LocalDateTime now = dateAndTimeUtils.now();
-        final LocalDateTime startOfDay = dateAndTimeUtils.startOfDay(now);
-        return getVisitsBetweenDates(startOfDay, now);
-    }
-
 
 }

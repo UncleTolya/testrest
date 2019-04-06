@@ -1,5 +1,7 @@
 package ru.tolymhlv.testrest.controllers;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
@@ -8,12 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.tolymhlv.testrest.services.DateAndTimeUtils;
-import ru.tolymhlv.testrest.services.visit.*;
-import ru.tolymhlv.testrest.services.visit.requests.GetStatisticsRequest;
-import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
-import ru.tolymhlv.testrest.services.visit.responses.FullVisitStatistics;
-import ru.tolymhlv.testrest.services.visit.responses.VisitResponse;
-import ru.tolymhlv.testrest.services.visit.responses.VisitStatistics;
+import ru.tolymhlv.testrest.services.VisitServiceImpl;
+import ru.tolymhlv.testrest.services.requests.GetStatisticsRequest;
+import ru.tolymhlv.testrest.services.requests.VisitCreateRequest;
+import ru.tolymhlv.testrest.services.responses.FullVisitStatistics;
+import ru.tolymhlv.testrest.services.responses.VisitResponse;
+import ru.tolymhlv.testrest.services.responses.VisitStatistics;
 
 import java.time.LocalDateTime;
 
@@ -29,18 +31,17 @@ public class VisitController {
         this.dateAndTimeUtils = dateAndTimeUtils;
     }
 
-    @PostMapping(name = "/visit", consumes = "application/x-www-form-urlencoded", produces = "application/json")
-    public @ResponseBody ResponseEntity<?> createVisitAndGetVisitStatistics(
-            final String userId,
-            final String pageId) {
+    @PostMapping(name = "/visit", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> createVisitAndGetVisitStatistics(
+            final @RequestBody String requestJson) {
 
-        final VisitCreateRequest visitCreateRequest = new VisitCreateRequest(userId, pageId);
+        final VisitCreateRequest visitCreateRequest = JSONObject.parseObject(requestJson, VisitCreateRequest.class);
         final VisitStatistics visitStatistics = visitService.create(visitCreateRequest);
 
         return getResponseAsJSON(visitStatistics);
     }
 
-    @GetMapping(value = "/visits", consumes = "application/x-www-form-urlencoded", produces = "application/json")
+    @GetMapping(value = "/visits", produces = "application/json")
     public ResponseEntity<?> getFullVisitStatisticsByDate(
             final @RequestParam(name = "from") String from,
             final @RequestParam(name = "to") String to) {
@@ -54,10 +55,10 @@ public class VisitController {
         final GetStatisticsRequest getStatisticsRequest = new GetStatisticsRequest(fromAsTime, toAsTime);
         final FullVisitStatistics fullVisitStatistics = visitService.getStatistics(getStatisticsRequest);
 
-        return getResponseAsJSON(fullVisitStatistics);
+        return ResponseEntity.ok(JSON.toJSONString(fullVisitStatistics));
     }
 
-    private ResponseEntity<?> getResponseAsJSON(VisitResponse visitResponse) {
+    private ResponseEntity<Object> getResponseAsJSON(VisitResponse visitResponse) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             return ResponseEntity.ok(mapper.writeValueAsString(visitResponse));

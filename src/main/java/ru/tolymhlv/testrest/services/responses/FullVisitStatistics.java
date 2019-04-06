@@ -1,4 +1,4 @@
-package ru.tolymhlv.testrest.services.visit.responses;
+package ru.tolymhlv.testrest.services.responses;
 
 import lombok.Data;
 

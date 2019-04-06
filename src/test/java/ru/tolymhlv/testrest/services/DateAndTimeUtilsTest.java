@@ -10,9 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
@@ -42,7 +42,7 @@ class DateAndTimeUtilsTest {
 
     @Test
     public void startOfDayReturnCorrect() {
-        final LocalDateTime now = dateAndTimeUtils.now();
+        final LocalDateTime now = LocalDateTime.now(fixed);
         final LocalDateTime startOfDayTest = dateAndTimeUtils.startOfDay(now);
 
         final String nowString = now.toString().substring(0, 11) + "00:00";
@@ -60,9 +60,15 @@ class DateAndTimeUtilsTest {
 
     @Test
     public void stringToTimeIncorrect() {
-        String input = "1992-04-15-03-15-15";
+        String input = "1992-04-15-03-16-15";
         LocalDateTime time = dateAndTimeUtils.stringToTime(input);
         assertNotEquals("1992-04-15T03:15:16", time.toString());
+    }
+
+    @Test
+    public void stringToTimeIllegalArgument() {
+        String input = "1992-13-15-03-16-15";
+        assertThrows(DateTimeParseException.class, () -> dateAndTimeUtils.stringToTime(input));
     }
 
 }
