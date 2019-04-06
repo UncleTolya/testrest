@@ -1,9 +1,14 @@
 package ru.tolymhlv.testrest.services;
 
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +19,37 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class DateAndTimeUtilsTest {
 
     @Autowired
-    DateAndTimeUtils dateAndTimeUtils;
+    private DateAndTimeUtils dateAndTimeUtils;
+
+    Clock fixed;
+
+    @BeforeEach
+    public void setUp() {
+        fixed = Clock.fixed(Instant.now(), dateAndTimeUtils.getZoneId());
+    }
+
+
+    @Test
+    public void nowReturnCorrect() {
+        final LocalDateTime nowTest = LocalDateTime.now(fixed);
+        final LocalDateTime now = dateAndTimeUtils.now();
+
+        final String nowTestString = nowTest.toString().substring(0, 18);
+        final String nowString = now.toString().substring(0, 18);
+
+        assertEquals(nowString, nowTestString);
+    }
+
+    @Test
+    public void startOfDayReturnCorrect() {
+        final LocalDateTime now = dateAndTimeUtils.now();
+        final LocalDateTime startOfDayTest = dateAndTimeUtils.startOfDay(now);
+
+        final String nowString = now.toString().substring(0, 11) + "00:00";
+        final String startOfDayTestSring = startOfDayTest.toString();
+
+        assertEquals(nowString, startOfDayTestSring);
+    }
 
     @Test
     public void stringToTimeCorrect() {
