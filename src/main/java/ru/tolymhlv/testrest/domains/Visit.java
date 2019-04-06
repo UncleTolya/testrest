@@ -16,12 +16,16 @@ public class Visit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "user_id")
     private String userId;
+
+    @Column(name = "page_id")
     private String pageId;
 
-    @Column(name = "date")
+    @Column(name = "date_time")
     private LocalDateTime date;
 
     public Visit(@NonNull final String userId,

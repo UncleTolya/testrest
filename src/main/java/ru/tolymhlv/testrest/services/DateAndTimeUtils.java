@@ -30,9 +30,13 @@ public class DateAndTimeUtils {
         return now.toLocalDate().atStartOfDay(zoneId).toLocalDateTime();
     }
 
-    public LocalDateTime stringToTime(@NonNull final String stringWithDate) {
+    public LocalDateTime stringToTime(@NonNull final String stringWithDate) throws IllegalArgumentException {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
-        return LocalDateTime.parse(stringWithDate, formatter);
+        try {
+            return LocalDateTime.parse(stringWithDate, formatter);
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public ZoneId getZoneId() {

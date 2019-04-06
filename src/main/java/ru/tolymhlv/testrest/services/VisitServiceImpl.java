@@ -1,6 +1,7 @@
 package ru.tolymhlv.testrest.services;
 
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,9 +35,9 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public VisitStatistics create(@NonNull final VisitCreateRequest request) {
-        addVisit(request.getUserId(), request.getPageId());
+    public VisitStatistics create(@NonNull final VisitCreateRequest request) throws IllegalArgumentException {
 
+        addVisit(request);
         final LocalDateTime now = dateAndTimeUtils.now();
         final LocalDateTime startOfDay = dateAndTimeUtils.startOfDay(now);
 
@@ -73,9 +74,18 @@ public class VisitServiceImpl implements VisitService {
         return new FullVisitStatistics(counterVisitsByDate, counterUniqUsersByDate, counterUniqRegularUsersByDate);
     }
 
-    private Visit addVisit(@NonNull final String userId, @NonNull final String pageId) {
+    private void addVisit(@NonNull final VisitCreateRequest request) throws IllegalArgumentException{
+        final String userId = request.getUserId();
+        final String pageId = request.getPageId();
+        if (!StringUtils.isAlphanumeric(userId) || userId.length() > 255 ) {
+            throw new IllegalArgumentException("Wrong format of userId");
+        }
+        if (!StringUtils.isAlphanumeric(pageId) || pageId.length() > 255) {
+            throw new IllegalArgumentException("Wrong format of pageId");
+        }
+
         final Visit visit = new Visit(userId, pageId, dateAndTimeUtils.now());
-        return visitRepo.save(visit);
+        visitRepo.save(visit);
     }
 
     private List<Visit> getVisitsBetweenDates(@NonNull final LocalDateTime from, @NonNull final LocalDateTime to) {

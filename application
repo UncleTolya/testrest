@@ -9,6 +9,3 @@ spring.jpa.open-in-view=false
 
 ru.tolymhlv.testrest.zoneId=Europe/Moscow
 ru.tolymhlv.testrest.quantityOfVisitedPagesToBeingRegularUser=10
-
-#logging.level.org.hibernate.SQL=DEBUG
-logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE

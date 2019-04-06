@@ -2,7 +2,6 @@ package ru.tolymhlv.testrest.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.tolymhlv.testrest.services.requests.VisitCreateRequest;
 
@@ -16,9 +15,16 @@ class VisitServiceImplTest {
 
 
     @Test
-    public void methodCreatGetEmptyRequestReturnNPE() {
+    public void creatGetEmptyValuesReturnNPE() {
         VisitCreateRequest request = new VisitCreateRequest(null, null);
         assertThrows(NullPointerException.class, () -> visitService.create(request));
     }
+
+    @Test
+    public void creatGetNullRequestReturnNPE() {
+        VisitCreateRequest request = new VisitCreateRequest(null, null);
+        assertThrows(NullPointerException.class, () -> visitService.create(request));
+    }
+
 
 }

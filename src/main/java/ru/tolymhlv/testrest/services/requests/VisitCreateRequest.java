@@ -1,11 +1,13 @@
 package ru.tolymhlv.testrest.services.requests;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.io.Serializable;
+import lombok.NoArgsConstructor;
 
 @Data
-public class VisitCreateRequest implements Serializable {
-    private final String userId;
-    private final String pageId;
+@NoArgsConstructor
+@AllArgsConstructor
+public class VisitCreateRequest {
+    private String userId;
+    private String pageId;
 }
