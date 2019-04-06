@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.tolymhlv.testrest.domains.Visit;
-import ru.tolymhlv.testrest.repos.VisitRepo;
+import ru.tolymhlv.testrest.repos.JpaVisitRepo;
 import ru.tolymhlv.testrest.services.DateAndTimeUtils;
 import ru.tolymhlv.testrest.services.visit.requests.GetStatisticsRequest;
 import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class VisitServiceImpl implements VisitService {
 
-    private final VisitRepo visitRepo;
+    private final JpaVisitRepo visitRepo;
     private final DateAndTimeUtils dateAndTimeUtils;
 
     @NotBlank
@@ -29,7 +29,7 @@ public class VisitServiceImpl implements VisitService {
     private Integer quantityOfVisitedPagesToBeingRegularUser;
 
     @Autowired
-    public VisitServiceImpl(@NonNull final VisitRepo visitRepo, @NonNull final DateAndTimeUtils dateAndTimeUtils) {
+    public VisitServiceImpl(@NonNull final JpaVisitRepo visitRepo, @NonNull final DateAndTimeUtils dateAndTimeUtils) {
         this.visitRepo = visitRepo;
         this.dateAndTimeUtils = dateAndTimeUtils;
     }
