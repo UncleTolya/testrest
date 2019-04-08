@@ -1,4 +1,4 @@
-package ru.tolymhlv.testrest.services;
+package ru.tolymhlv.testrest.utils;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

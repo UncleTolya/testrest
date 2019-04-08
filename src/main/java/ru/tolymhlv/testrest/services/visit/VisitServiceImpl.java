@@ -1,20 +1,17 @@
-package ru.tolymhlv.testrest.services;
+package ru.tolymhlv.testrest.services.visit;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.tolymhlv.testrest.domains.Visit;
-import ru.tolymhlv.testrest.repos.JpaVisitRepo;
-import ru.tolymhlv.testrest.services.requests.GetStatisticsRequest;
-import ru.tolymhlv.testrest.services.requests.VisitCreateRequest;
-import ru.tolymhlv.testrest.services.responses.FullVisitStatistics;
-import ru.tolymhlv.testrest.services.responses.VisitStatistics;
+import ru.tolymhlv.testrest.repos.VisitRepo;
+import ru.tolymhlv.testrest.services.visit.requests.GetStatisticsParams;
+import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
+import ru.tolymhlv.testrest.services.visit.responses.FullVisitStatistics;
+import ru.tolymhlv.testrest.services.visit.responses.VisitStatistics;
+import ru.tolymhlv.testrest.utils.DateAndTimeUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 public class VisitServiceImpl implements VisitService {
 
-    private final JpaVisitRepo visitRepo;
+    private final VisitRepo visitRepo;
     private final DateAndTimeUtils dateAndTimeUtils;
 
     @NotBlank
@@ -34,7 +31,7 @@ public class VisitServiceImpl implements VisitService {
     private Integer quantityOfVisitedPagesToBeingRegularUser;
 
     @Autowired
-    public VisitServiceImpl(@NonNull final JpaVisitRepo visitRepo, @NonNull final DateAndTimeUtils dateAndTimeUtils) {
+    public VisitServiceImpl(@NonNull final VisitRepo visitRepo, @NonNull final DateAndTimeUtils dateAndTimeUtils) {
         this.visitRepo = visitRepo;
         this.dateAndTimeUtils = dateAndTimeUtils;
     }
@@ -55,10 +52,9 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public FullVisitStatistics getStatistics(@NonNull final GetStatisticsRequest request) throws IllegalArgumentException {
+    public FullVisitStatistics getStatistics(@NonNull final GetStatisticsParams request) throws IllegalArgumentException {
 
-        final TimeInterval interval = getDatesFromGetStatisticsRequest(request);
-        final List<Visit> visitsByDate = getVisitsBetweenDates(interval.getFrom(), interval.getTo());
+        final List<Visit> visitsByDate = getVisitsBetweenDates(request.getFrom(), request.getTo());
 
         final int quantityVisitsByDate = visitsByDate.size();
         final long quantityUniqUsersByDate = countUniqUsersByDate(visitsByDate);
@@ -68,7 +64,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
 
-    private void addVisit(@NonNull final VisitCreateRequest request) throws IllegalArgumentException{
+    private void addVisit(@NonNull final VisitCreateRequest request) throws IllegalArgumentException {
         if (visitRequestIsNotValidate(request)) {
             throw new IllegalArgumentException("Wrong format of userId");
         }
@@ -80,10 +76,10 @@ public class VisitServiceImpl implements VisitService {
         return visitRepo.findAllByDateBetween(from, to);
     }
 
-    private boolean visitRequestIsNotValidate(@NotNull VisitCreateRequest request){
+    private boolean visitRequestIsNotValidate(@NotNull VisitCreateRequest request) {
         final String userId = request.getUserId();
         final String pageId = request.getPageId();
-        if (!StringUtils.isAlphanumeric(userId) || userId.length() > 255 ) {
+        if (!StringUtils.isAlphanumeric(userId) || userId.length() > 255) {
             return true;
         }
         if (!StringUtils.isAlphanumeric(pageId) || pageId.length() > 255) {
@@ -91,21 +87,6 @@ public class VisitServiceImpl implements VisitService {
         }
         return false;
 
-    }
-
-    private TimeInterval getDatesFromGetStatisticsRequest(@NotNull GetStatisticsRequest request) throws IllegalArgumentException {
-        LocalDateTime fromAsTime;
-        LocalDateTime toAsTime;
-        try {
-            fromAsTime = dateAndTimeUtils.stringToTime(request.getFrom());
-            toAsTime = dateAndTimeUtils.stringToTime(request.getTo());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid dates format, use yyyy-MM-dd-HH-mm-ss");
-        }
-        if (fromAsTime.isAfter(toAsTime)) {
-            throw new IllegalArgumentException("Invalid dates order");
-        }
-        return new TimeInterval(fromAsTime, toAsTime);
     }
 
     private long countUniqUsersByDate(@NotNull List<Visit> visits) {
@@ -125,12 +106,4 @@ public class VisitServiceImpl implements VisitService {
                 .filter(values -> values.size() >= quantityOfVisitedPagesToBeingRegularUser)
                 .count();
     }
-
-    @Data
-    @AllArgsConstructor
-    private class TimeInterval {
-        private LocalDateTime from;
-        private LocalDateTime to;
-    }
-
 }
