@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @Service
 public class DateAndTimeUtils {
@@ -34,7 +35,7 @@ public class DateAndTimeUtils {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         try {
             return LocalDateTime.parse(stringWithDate, formatter);
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             throw new IllegalArgumentException();
         }
     }

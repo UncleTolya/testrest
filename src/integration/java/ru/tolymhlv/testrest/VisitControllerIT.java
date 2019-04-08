@@ -12,12 +12,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.tolymhlv.testrest.controller.VisitController;
 import ru.tolymhlv.testrest.services.DateAndTimeUtils;
-import ru.tolymhlv.testrest.services.requests.GetStatisticsRequest;
 import ru.tolymhlv.testrest.services.requests.VisitCreateRequest;
 import ru.tolymhlv.testrest.services.responses.FullVisitStatistics;
 import ru.tolymhlv.testrest.services.responses.VisitStatistics;
-
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,11 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/create-visits-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = "/create-visits-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class VisitControllerIT {
-    @Autowired
-    private VisitController visitController;
-
-    @Autowired
-    private DateAndTimeUtils dateAndTimeUtils;
 
     @Autowired
     private MockMvc mockMvc;

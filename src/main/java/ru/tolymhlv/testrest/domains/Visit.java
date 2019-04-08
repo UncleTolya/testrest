@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Immutable
 @Data
 @NoArgsConstructor
+@Table(indexes = { @Index(name = "date_time", columnList = "date_time") })
 public class Visit {
 
     @Id

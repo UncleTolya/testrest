@@ -1,7 +1,5 @@
 package ru.tolymhlv.testrest.services;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +66,7 @@ class DateAndTimeUtilsTest {
     @Test
     public void stringToTimeIllegalArgument() {
         String input = "1992-13-15-03-16-15";
-        assertThrows(DateTimeParseException.class, () -> dateAndTimeUtils.stringToTime(input));
+        assertThrows(IllegalArgumentException.class, () -> dateAndTimeUtils.stringToTime(input));
     }
 
 }
