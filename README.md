@@ -7,8 +7,12 @@ App execute two functions:
 
 Build instruction:
 1) git clone https://github.com/UncleTolya/testrest.git
-2) create new MySQL8 databank "bankspring"
-3) create new user "springuser" with password "pass" and all permissions.
+2) In "application.properties" file specify your database name, database user and time zone;
+
+//or u can create new database and new user, whoose names uses as default in properties 
+-create new MySQL8 database "bankspring"                                 
+-create new user "springuser" with password "pass" and all permissions.
+-default time zone is "Europe/Moscow"
 
 Tests use owned application-test.properties file, and use in-memory database, which fills by sql-files.
 
