@@ -3,6 +3,6 @@ package ru.tolymhlv.testrest.views;
 import lombok.Data;
 
 @Data
-public class FullVisitStatisticsResponseView {
+public class FullVisitStatisticsView {
     private final String responseJson;
 }

@@ -14,7 +14,7 @@ import ru.tolymhlv.testrest.services.visit.responses.VisitStatistics;
 import ru.tolymhlv.testrest.utils.DateAndTimeUtils;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +76,7 @@ public class VisitServiceImpl implements VisitService {
         return visitRepo.findAllByDateBetween(from, to);
     }
 
-    private boolean visitRequestIsNotValidate(@NotNull VisitCreateRequest request) {
+    private boolean visitRequestIsNotValidate(@NonNull VisitCreateRequest request) {
         final String userId = request.getUserId();
         final String pageId = request.getPageId();
         if (!StringUtils.isAlphanumeric(userId) || userId.length() > 255) {
@@ -89,14 +89,14 @@ public class VisitServiceImpl implements VisitService {
 
     }
 
-    private long countUniqUsersByDate(@NotNull List<Visit> visits) {
+    private long countUniqUsersByDate(@NonNull List<Visit> visits) {
         return visits.parallelStream()
                 .map(Visit::getUserId)
                 .distinct()
                 .count();
     }
 
-    private long countUniqRegularUsersByDate(@NotNull List<Visit> visits) {
+    private long countUniqRegularUsersByDate(@NonNull List<Visit> visits) {
         return visits.parallelStream()
                 .collect(Collectors.groupingByConcurrent(Visit::getUserId))
                 .entrySet()

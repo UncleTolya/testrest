@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GetStatisticsRequestView {
+public class GetStatisticsView {
     private final String from;
     private final String to;
 }

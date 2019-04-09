@@ -14,22 +14,17 @@ import ru.tolymhlv.testrest.services.visit.requests.GetStatisticsParams;
 import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
 import ru.tolymhlv.testrest.services.visit.responses.FullVisitStatistics;
 import ru.tolymhlv.testrest.services.visit.responses.VisitStatistics;
-import ru.tolymhlv.testrest.views.FullVisitStatisticsResponseView;
-import ru.tolymhlv.testrest.views.GetStatisticsRequestView;
-import ru.tolymhlv.testrest.views.VisitCreateRequestView;
-import ru.tolymhlv.testrest.views.VisitStatisticsResponseView;
+import ru.tolymhlv.testrest.views.FullVisitStatisticsView;
+import ru.tolymhlv.testrest.views.GetStatisticsView;
+import ru.tolymhlv.testrest.views.VisitCreateView;
+import ru.tolymhlv.testrest.views.VisitStatisticsView;
 
 @RestController
 public class VisitController {
-
     private final VisitCreateConverter visitCreateConverter;
-
     private final GetStatisticsParamsConverter getStatisticsParamsConverter;
-
     private final VisitStatisticsConverter visitStatisticsConverter;
-
     private final FullVisitStatisticsConverter fullVisitStatisticsConverter;
-
     private final VisitServiceImpl visitService;
 
     @Autowired
@@ -45,11 +40,11 @@ public class VisitController {
     public ResponseEntity<String> createVisitAndGetVisitStatistics(
             final @RequestBody String requestJson) {
 
-        final VisitCreateRequestView visitCreateRequestView = new VisitCreateRequestView(requestJson);
+        final VisitCreateView visitCreateView = new VisitCreateView(requestJson);
 
         VisitCreateRequest visitCreateRequest;
         try {
-            visitCreateRequest = visitCreateConverter.getModel(visitCreateRequestView);
+            visitCreateRequest = visitCreateConverter.getModel(visitCreateView);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -61,10 +56,10 @@ public class VisitController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
-        final VisitStatisticsResponseView visitStatisticsResponseView
-                = new VisitStatisticsResponseView(visitStatisticsConverter.getView(visitStatistics));
+        final VisitStatisticsView visitStatisticsView
+                = new VisitStatisticsView(visitStatisticsConverter.getView(visitStatistics));
 
-        return ResponseEntity.ok(visitStatisticsResponseView.getResponseJson());
+        return ResponseEntity.ok(visitStatisticsView.getResponseJson());
     }
 
     @GetMapping(value = "/visits", produces = "application/json")
@@ -72,11 +67,11 @@ public class VisitController {
             final @RequestParam(name = "from") String from,
             final @RequestParam(name = "to") String to) {
 
-        final GetStatisticsRequestView getStatisticsRequestView = new GetStatisticsRequestView(from, to);
+        final GetStatisticsView getStatisticsView = new GetStatisticsView(from, to);
 
         GetStatisticsParams getStatisticsParams;
         try {
-            getStatisticsParams = getStatisticsParamsConverter.getModel(getStatisticsRequestView);
+            getStatisticsParams = getStatisticsParamsConverter.getModel(getStatisticsView);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -88,8 +83,8 @@ public class VisitController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
-        FullVisitStatisticsResponseView fullVisitStatisticsResponseView
-                = new FullVisitStatisticsResponseView(fullVisitStatisticsConverter.getView(fullVisitStatistics));
-        return ResponseEntity.ok(fullVisitStatisticsResponseView.getResponseJson());
+        FullVisitStatisticsView fullVisitStatisticsView
+                = new FullVisitStatisticsView(fullVisitStatisticsConverter.getView(fullVisitStatistics));
+        return ResponseEntity.ok(fullVisitStatisticsView.getResponseJson());
     }
 }

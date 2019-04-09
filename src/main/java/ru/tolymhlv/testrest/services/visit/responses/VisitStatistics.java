@@ -1,6 +1,5 @@
 package ru.tolymhlv.testrest.services.visit.responses;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

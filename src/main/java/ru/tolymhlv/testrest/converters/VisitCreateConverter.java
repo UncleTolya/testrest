@@ -1,22 +1,23 @@
 package ru.tolymhlv.testrest.converters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
-import ru.tolymhlv.testrest.views.VisitCreateRequestView;
+import ru.tolymhlv.testrest.views.VisitCreateView;
 
 import java.io.IOException;
 
 @Component
-public class VisitCreateConverter implements Converter<VisitCreateRequest, VisitCreateRequestView> {
+public class VisitCreateConverter implements Converter<VisitCreateRequest, VisitCreateView> {
 
     @Override
-    public VisitCreateRequestView getView(VisitCreateRequest model) {
+    public VisitCreateView getView(@NonNull final VisitCreateRequest model) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public VisitCreateRequest getModel(VisitCreateRequestView view) {
+    public VisitCreateRequest getModel(@NonNull final VisitCreateView view) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(view.getRequestBody(), VisitCreateRequest.class);

@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class VisitCreateRequestView {
+public class VisitCreateView {
     private String requestBody;
 }

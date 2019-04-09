@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface VisitRepo extends JpaRepository<Visit, Long> {
 
-    List<Visit> findAllByDateBetween(@NonNull LocalDateTime fromDate, @NonNull LocalDateTime toDate);
+    List<Visit> findAllByDateBetween(@NonNull final LocalDateTime fromDate, final @NonNull LocalDateTime toDate);
 }

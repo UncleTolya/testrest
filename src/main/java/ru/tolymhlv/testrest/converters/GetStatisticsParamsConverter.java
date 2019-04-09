@@ -1,15 +1,16 @@
 package ru.tolymhlv.testrest.converters;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.tolymhlv.testrest.services.visit.requests.GetStatisticsParams;
 import ru.tolymhlv.testrest.utils.DateAndTimeUtils;
-import ru.tolymhlv.testrest.views.GetStatisticsRequestView;
+import ru.tolymhlv.testrest.views.GetStatisticsView;
 
 import java.time.LocalDateTime;
 
 @Component
-public class GetStatisticsParamsConverter implements Converter<GetStatisticsParams, GetStatisticsRequestView> {
+public class GetStatisticsParamsConverter implements Converter<GetStatisticsParams, GetStatisticsView> {
 
     private final DateAndTimeUtils dateAndTimeUtils;
 
@@ -19,12 +20,12 @@ public class GetStatisticsParamsConverter implements Converter<GetStatisticsPara
     }
 
     @Override
-    public GetStatisticsRequestView getView(GetStatisticsParams model) {
+    public GetStatisticsView getView(@NonNull final GetStatisticsParams model) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public GetStatisticsParams getModel(GetStatisticsRequestView view) {
+    public GetStatisticsParams getModel(@NonNull final GetStatisticsView view) {
         LocalDateTime fromAsTime;
         LocalDateTime toAsTime;
         try {

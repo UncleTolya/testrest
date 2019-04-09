@@ -1,4 +1,4 @@
-package ru.tolymhlv.testrest.converters;
+package ru.tolymhlv.testrest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.tolymhlv.testrest.converters.FullVisitStatisticsConverter;
 import ru.tolymhlv.testrest.services.visit.requests.VisitCreateRequest;
 import ru.tolymhlv.testrest.services.visit.responses.FullVisitStatistics;
 import ru.tolymhlv.testrest.services.visit.responses.VisitStatistics;
