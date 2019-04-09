@@ -3,7 +3,7 @@
 A simply RESTful app.
 App execute two functions:
   1)Listen "/visit", required "userId" and "pageId" as JSON, add new visit and return visits statistic by today;
-  2)Listen "/visits", required time-interval withs two params: "from" and "to", and then return visits statistic by received dates.
+  2)Listen "/visits", required time-interval withs two params: "from" and "to"(pattern "yyyy-MM-dd-HH-mm-ss"), and then return visits statistic by received dates.
 
 Build instruction:
 1) git clone https://github.com/UncleTolya/testrest.git
