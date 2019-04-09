@@ -2,15 +2,15 @@
 
 A simply RESTful app.
 App execute two functions:
-  1)Listen "/visit", requred "userId" and "pageId" as JSON, add new visit and return visits statistic by today;
-  2)Listen "/visits", requred time-interval withs two parmas: "from" and "to", and then return visits statistic by received dates.
+  1)Listen "/visit", required "userId" and "pageId" as JSON, add new visit and return visits statistic by today;
+  2)Listen "/visits", required time-interval withs two params: "from" and "to", and then return visits statistic by received dates.
 
 Build instruction:
 1) git clone https://github.com/UncleTolya/testrest.git
 2) In "application.properties" file specify your database name, database user and time zone;
 
-//or u can create new database and new user, whoose names uses as default in properties 
--create new MySQL8 database "bankspring"                                 
+//or u can create new database and new user, whose names uses as default in properties 
+-create new MySQL8 database "testrestbank"                                 
 -create new user "springuser" with password "pass" and all permissions.
 -default time zone is "Europe/Moscow"
 
